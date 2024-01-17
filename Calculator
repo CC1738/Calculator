@@ -1,0 +1,48 @@
+# Simple Calculator using Tkinter
+
+from tkinter import *
+
+expression = ""
+
+def press(num):
+    global expression
+    expression = expression + str(num)
+    equation.set(expression)
+
+def equalpress():
+    try:
+        global expression
+        total = str(eval(expression))
+        equation.set(total)
+        expression = ""
+    except:
+        equation.set(" error ")
+        expression = ""
+
+def clear():
+    global expression
+    expression = ""
+    equation.set("")
+
+if __name__ == "__main__":
+    root = Tk()
+    root.title("Simple Calculator")
+    root.geometry("400x400")
+
+    equation = StringVar()
+    expression_field = Entry(root, textvariable=equation)
+    expression_field.grid(columnspan=4, ipadx=70)
+
+    buttons = [
+        '1', '2', '0', '+',
+        '=', 'Clear', '.'
+    ]
+
+    row_val = [2, 2, 5, 2, 5, 5, 6]
+    col_val = [0, 1, 0, 3, 2, 1, 0]
+
+    for i, button in enumerate(buttons):
+        btn = Button(root, text=f' {button} ', command=lambda b=button: press(b), height=1, width=7)
+        btn.grid(row=row_val[i], column=col_val[i])
+
+    root.mainloop()
